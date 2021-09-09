@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  mariadb-galera-2:
+    container_name: mariadb-galera-2
+    image: bitnami/mariadb-galera:10.5-debian-10
+    env_file:
+      - .env
+    environment:
+      MARIADB_GALERA_NODE_ADDRESS: ${MARIADB_NODE_2}
+    restart: always
+    healthcheck:
+      test: ['CMD', '/opt/bitnami/scripts/mariadb-galera/healthcheck.sh']
+      interval: 15s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
+    volumes:
+      - ${MARIADB_CERTS_DIR}/ca-cert.pem:/bitnami/mariadb/certs/ca-cert.pem:ro
+      - ${MARIADB_CERTS_DIR}/server-cert.pem:/bitnami/mariadb/certs/server-cert.pem:ro
+      - ${MARIADB_CERTS_DIR}/server-key.pem:/bitnami/mariadb/certs/server-key.pem:ro
+      - ./data_node2:/bitnami/mariadb:rw
+    network_mode: host
