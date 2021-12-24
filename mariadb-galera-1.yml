@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     environment:
-      MARIADB_GALERA_CLUSTER_BOOTSTRAP: "yes"
+      MARIADB_GALERA_CLUSTER_BOOTSTRAP: "${BOOTSTRAP:-no}"
       MARIADB_GALERA_NODE_ADDRESS: ${MARIADB_NODE_1}
     restart: always
     healthcheck:

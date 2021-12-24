@@ -87,7 +87,7 @@ mkdir data_node3 && chown 1001:1001 data_node3
 ### 6. Run Docker
 `node 1`
 ```bash
-docker-compose -f mariadb-galera-1.yml up -d
+export BOOTSTRAP=yes && docker-compose -f mariadb-galera-1.yml up -d
 ```
 `node 2`
 ```bash
@@ -96,4 +96,9 @@ docker-compose -f mariadb-galera-2.yml up -d
 `node 3`
 ```bash
 docker-compose -f mariadb-galera-3.yml up -d
+```
+`node 1`
+```bash
+docker stop mariadb-galera-1
+export BOOTSTRAP=no && docker-compose -f mariadb-galera-1.yml up -d
 ```
